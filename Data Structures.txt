@@ -1,0 +1,51 @@
+Data Structures
+
+- `Sample Code`
+
+Array
+- Generic type: the elements can be anything
+- Defined in Swift via protocols: each protocol layers more functionality on the array
+	- ex. Array is a Sequence, so it can be iterate through it
+	- ex. Array is also a Collection, so it can be accessed with a subscript operator
+- Elements are explicitly **ordered**
+
+- Lookup is O(1)
+- Insertion is O(1) at the end, O(N) anywhere else
+- Memory Capacity: If the pre-allocated space set aside is exceeded, then there's an amortized cost that's still O(1) (memory size doubles with each copy)
+
+Dictionary
+- Generic collection: holds key values
+- No guarantees of order, contrast to index
+- Cannot insert at specific location, contrast to index
+- `Key` of Dict. must conform to `Hashable` too
+
+- Lookup is O(1)
+- Insertion is O(1)
+
+Kadane's Algorithm
+Look at each index: What's the maximum subarray ending at this index?
+We know that M is the maximum sum ending at the previous index  
+
+
+Linked List
+Singly Linked List
+Node Structure: Contains a value and a reference to the next value
+Access is O(N)
+Insertion (aka adding) and deletion, however, will be O(1)
+
+Insertion (adding)
+- Adding a node: Make an new node `cur`, set `prev`'s next to `cur`, and then `cur`'s next to `next`'s value
+- Adding a node at the beginning: Make a new node `cur`, link it to what is `head`, and then set `cur` as `head`
+- Insertion is generally O(1) because unlike an array, we don't need to move all the elements past the inserted element
+
+Deletion
+- Deleting a node: 
+	- 1. Find `cur`'s previous node, called `prev` and `cur`'s next node `next`
+	- 2. Link `prev` to what is `cur`'s next
+- Deleting a node from head:
+	- 1. If you want to delete the head, just set the next node to be head
+- Deletion for the most part is O(1)
+
+General Takeaways
+- A Linked List can make a great solution if insertion and deletion will be heavily utilized.
+- Doubly Linked Lists are ideal if you will be deleting from the middle of the list or traversing in reverse order.
