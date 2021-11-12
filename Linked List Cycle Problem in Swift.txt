@@ -24,3 +24,27 @@ class Solution {
 }
 
 //Solution 2: Two Pointer
+extension ListNode: Equatable {
+    public static func == (lhs: ListNode, rhs: ListNode) -> Bool {
+        return lhs === rhs
+    }
+}
+
+class Solution {
+    func hasCycle(_ head: ListNode?) -> Bool {
+        var fast = head
+        var slow = head
+        
+        // fast != nil accounts for the case where fast is at nil value - the end of (the end of the linked list)
+        // fast!.next accounts for the case where fast is at the node right before nil(the end of the linked list).
+        while (fast != nil && fast!.next != nil) {
+            slow = slow!.next
+            fast = fast!.next!.next
+            if (fast == slow) { return true }
+        }
+        return false
+    }
+}
+
+//Time Complexity: O(N)
+//Space Complexity: O(1)
