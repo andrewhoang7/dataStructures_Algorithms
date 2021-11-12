@@ -1,5 +1,6 @@
-//Linked List Cycle in Swift
+//Linked List Cycle in Swift: Solution via Set and via Two Pointer Method
 
+//Solution 1: Set
 extension ListNode: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine((ObjectIdentifier(self).hashValue))
@@ -21,3 +22,5 @@ class Solution {
         return false
     }
 }
+
+//Solution 2: Two Pointer
