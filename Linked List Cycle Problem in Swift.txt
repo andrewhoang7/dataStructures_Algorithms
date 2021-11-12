@@ -1,0 +1,23 @@
+//Linked List Cycle in Swift
+
+extension ListNode: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine((ObjectIdentifier(self).hashValue))
+    }
+    public static func == (lhs: ListNode, rhs: ListNode) -> Bool {
+        return lhs === rhs
+    }
+}
+
+class Solution {
+    func hasCycle(_ head: ListNode?) -> Bool {
+        var set = Set<ListNode>()
+        var runner = head
+        while let node = runner {
+            if set.contains(node) { return true }
+            set.insert(node)
+            runner = node.next
+        }
+        return false
+    }
+}
