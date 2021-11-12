@@ -103,6 +103,7 @@ class MyLinkedList {
                 if i == index - 1 {
                     //if "index" is at the tail
                     if index == count - 1 { 
+                        //the second to last node becomes the new tail
                         tail = node
                     }
                     node!.next = node!.next!.next
