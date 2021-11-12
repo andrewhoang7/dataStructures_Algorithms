@@ -1,0 +1,117 @@
+//Linked List Implementation in Swift
+
+class Node {
+    public var value: Int
+    public var next: Node?
+    
+    public init (_ value: Int, next: Node? = nil) {
+        self.value = value
+        self.next = next
+    }
+}
+
+class MyLinkedList {
+    
+    var head: Node?
+    var tail: Node?
+    var count: Int
+
+    init() {
+        count = 0
+    }
+    
+    func get(_ index: Int) -> Int {
+        //check if in the index is greater than the actual count (-1 because 0th index)
+        if index > count - 1 { return -1 }
+        
+        var i = 0
+        var node = head
+        
+        //while the node has some value, if the count var i matches the index we want \n
+        //return that value. otherwise, increment by one and set the node to be the next one
+        while node != nil {
+            if i == index {
+                return node!.value
+            }
+            i += 1
+            node = node!.next
+        }
+        return -1
+    }
+    
+    func addAtHead(_ val: Int) {
+        if count == 0 {
+            head = Node(val)
+            tail = head
+        } else {
+            let newHead = Node(val)
+            newHead.next = head
+            head = newHead
+        }
+        count += 1
+    }
+    
+    func addAtTail(_ val: Int) {
+        if count == 0 {
+            head = Node(val)
+            tail = head
+        } else {
+            let newTail = Node(val)
+            tail!.next = newTail
+            tail = newTail
+        }
+        count += 1
+    }
+    
+    func addAtIndex(_ index: Int, _ val: Int) {
+        if index > count { return }
+        if index == count {
+            addAtTail(val)
+        } else if index == 0 {
+            addAtHead(val)
+        } else {
+            var i = 0
+            var node = head
+            
+            while node != nil {
+                //if var i (count variable) is right where I want to add my new node:
+                if i == index - 1 {
+                    let newNode = Node(val)
+                    //set new Node's `next` to be what the current existing node's `next` is
+                    newNode.next = node!.next
+                    //set the current existing node's `next` to now be the new Node
+                    node!.next = newNode
+                    count += 1
+                    break
+                }
+                i += 1
+                node = node!.next
+            }
+        }
+    }
+    
+    func deleteAtIndex(_ index: Int) {
+        if index >= count { return }
+        if index == 0 {
+            //assign the new head to the current head
+            head = head!.next
+        } else {
+            var i = 0
+            var node = head
+            
+            while node != nil {
+                if i == index - 1 {
+                    //if "index" is at the tail
+                    if index == count - 1 { 
+                        tail = node
+                    }
+                    node!.next = node!.next!.next
+                    break
+                }
+                i += 1
+                node = node!.next
+            }
+        }
+        count -= 1
+    }
+}
