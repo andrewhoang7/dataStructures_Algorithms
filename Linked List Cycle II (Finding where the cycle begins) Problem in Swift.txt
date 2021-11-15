@@ -1,0 +1,65 @@
+//Solution 1: Using a set
+Linear in both time and space
+
+extension ListNode: Hashable {
+    public func hash (into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self).hashValue)
+    }
+    public static func == (lhs: ListNode, rhs: ListNode) -> Bool {
+        lhs === rhs
+    }
+}
+
+class Solution {
+    func detectCycle(_ head: ListNode?) -> ListNode? {
+        var set = Set<ListNode>()
+        var runner = head
+        while let node = runner {
+            if set.contains(node) { return node }
+            set.insert(node)
+            runner = node.next
+        }
+        return nil
+    }
+}
+
+
+
+//Solution 2: Using Floyd's Cycle Algorithm
+
+O(1) in space, O(N) in time
+
+extension ListNode: Equatable {
+    public static func == (lhs: ListNode, rhs: ListNode) -> Bool {
+        lhs === rhs
+    }
+}
+
+class Solution {
+    func detectCycle(_ head: ListNode?) -> ListNode? {
+        if head == nil { return nil }
+        
+        var intersect = getIntersect(head)
+        if intersect == nil { return nil }
+        
+        var pointer1 = head
+        var pointer2 = intersect
+        while (pointer1 != pointer2) {
+            pointer1 = pointer1!.next
+            pointer2 = pointer2!.next
+        }
+        return pointer1
+    }
+    
+    func getIntersect(_ head: ListNode?) -> ListNode? {
+        var slow = head
+        var fast = head
+        
+        while (fast != nil && fast!.next != nil) {
+            slow = slow!.next
+            fast = fast!.next!.next
+            if slow == fast { return slow }
+        }
+        return nil
+    }
+}

@@ -1,0 +1,83 @@
+//Intersection of Linked List Solution
+
+//Solution 1: Brute Force (Time Limit Exceeded)
+//essentially, for each node in a, you're comparing a to every node in b to see if it matches
+
+extension ListNode: Equatable {
+    public static func == (lhs: ListNode, rhs: ListNode) -> Bool {
+        lhs === rhs
+    }
+}
+
+class Solution {
+    func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
+        var a = headA
+        while a != nil {
+            var b = headB
+            while b != nil {
+                if a === b {
+                    return a
+                }
+                b = b?.next
+            }
+            a = a?.next
+        }
+        return nil
+    }
+}
+
+//Solution 2: Dictionary
+
+
+extension ListNode: Hashable {
+    public func hash (into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self).hashValue)
+    }
+    
+    public static func == (lhs: ListNode, rhs: ListNode) -> Bool {
+        lhs === rhs
+    }
+}
+
+class Solution {
+    func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
+        var nodesInB = Set<ListNode>()
+        
+        var pointerA = headA
+        var pointerB = headB
+        
+        while pointerB != nil {
+            nodesInB.insert(pointerB!)
+            pointerB = pointerB?.next
+        }
+        
+        while pointerA != nil {
+            if nodesInB.contains(pointerA!) { return pointerA }
+            pointerA = pointerA?.next
+        }
+        
+        return nil
+    }
+}
+
+//Solution 3: Two Pointer
+
+class Solution {
+    func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
+        if headA == nil || headB == nil { return nil }
+        var a: ListNode? = headA
+        var b: ListNode? = headB
+        
+        //see the two pointer solution for more details
+        //but essentially, you're relying on getting the pointers such that they are the same distance from the intersection, 
+        //then walking them forward simultaneously until they meet
+        //when a reaches the end (a value of nil), assign it to the head of B. vice versa for b. the distance will be the same
+        //and eventually a will equal b. then you return a
+        
+        while a !== b {
+            a = a == nil ? headB : a!.next
+            b = b == nil ? headA : b!.next
+        }
+        return a
+    }
+}
